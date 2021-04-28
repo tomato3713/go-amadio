@@ -2,6 +2,7 @@
 Amadio is AMAteur raDIO logger on Terminal by Golang.
 
 ## Installation
+If you use Windows, run `chcp 65001`.
 
 ## Usage
 
