@@ -1,0 +1,9 @@
+debug:
+    enable : false
+    file: $XDG_CONFIG_HOME/amadio/amadio.log
+    level: 0
+
+display:
+    timezone: local # local or UTC
+
+open_cmd: open
