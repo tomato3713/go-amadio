@@ -25,26 +25,17 @@ func (gui *Gui) Run() error {
 			SetTextAlign(tview.AlignCenter).
 			SetText(text)
 	}
-	menu := newPrimitive("Menu")
-	main := newPrimitive("Main content")
-	sideBar := newPrimitive("Side Bar")
+	contactform := NewContact()
 
 	grid := tview.NewGrid().
-		SetRows(3, 0, 3).
-		SetColumns(30, 0, 30).
+		SetRows(0, 4, 5).
 		SetBorders(true).
-		AddItem(newPrimitive("Header"), 0, 0, 1, 3, 0, 0, false).
-		AddItem(newPrimitive("Footer"), 2, 0, 1, 3, 0, 0, false)
-
-	// Layout for screens narrower than 100 cells (menu and side bar are hidden).
-	grid.AddItem(menu, 0, 0, 0, 0, 0, 0, false).
-		AddItem(main, 1, 0, 1, 3, 0, 0, false).
-		AddItem(sideBar, 0, 0, 0, 0, 0, 0, false)
+		AddItem(newPrimitive("logged callsign list"), 0, 0, 1, 3, 0, 0, false).
+		AddItem(newPrimitive("result of searching logs for input callsign"), 2, 0, 1, 3, 0, 0, false)
 
 	// Layout for screens wider than 100 cells.
-	grid.AddItem(menu, 1, 0, 1, 1, 0, 100, false).
-		AddItem(main, 1, 1, 1, 1, 0, 100, false).
-		AddItem(sideBar, 1, 2, 1, 1, 0, 100, false)
+	grid.AddItem(contactform, 1, 0, 1, 3, 0, 0, false)
+
 	if err := gui.App.SetRoot(grid, true).SetFocus(grid).Run(); err != nil {
 		return err
 	}
