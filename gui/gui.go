@@ -28,15 +28,18 @@ func (gui *Gui) Run() error {
 	contactform := NewContact()
 
 	grid := tview.NewGrid().
-		SetRows(0, 4, 5).
+		SetRows(0, 6, 5).
 		SetBorders(true).
 		AddItem(newPrimitive("logged callsign list"), 0, 0, 1, 3, 0, 0, false).
 		AddItem(newPrimitive("result of searching logs for input callsign"), 2, 0, 1, 3, 0, 0, false)
 
 	// Layout for screens wider than 100 cells.
-	grid.AddItem(contactform, 1, 0, 1, 3, 0, 0, false)
+	grid.AddItem(contactform.Form, 1, 0, 1, 3, 0, 0, false)
 
-	if err := gui.App.SetRoot(grid, true).SetFocus(grid).Run(); err != nil {
+	if err := gui.App.SetRoot(grid, true).
+		SetFocus(grid).
+		EnableMouse(true).
+		Run(); err != nil {
 		return err
 	}
 	return nil
