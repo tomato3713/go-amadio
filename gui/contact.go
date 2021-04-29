@@ -5,6 +5,7 @@ import "github.com/rivo/tview"
 type ContactForm struct {
 	Form   *tview.Flex
 	Qso    *tview.Form
+	Clock  *tview.TextView
 	Common *tview.Form
 }
 
@@ -26,21 +27,33 @@ var (
 func NewContact() *ContactForm {
 	qso := tview.NewForm().SetHorizontal(true)
 	common := tview.NewForm().SetHorizontal(true)
+	clock := tview.NewTextView()
+
 	qso.AddInputField("Call", "", 10, nil, nil).
 		AddInputField("Snt", "", 4, nil, nil).
 		AddInputField("Rst", "", 4, nil, nil).
-		AddInputField("Comment", "", 20, nil, nil)
+		AddInputField("Comment", "", 30, nil, nil)
 	common.AddDropDown("freq", freqList, 0, nil).
-		AddDropDown("mode", modeList, 0, nil)
+		AddDropDown("mode", modeList, 0, nil).
+		SetBorderPadding(0, 0, 1, 1)
+
+	clock.SetMaxLines(3).
+		SetScrollable(false).
+		SetText("YYYY/MM/DD 00:00:00")
 
 	form := tview.NewFlex()
 	form.SetDirection(tview.FlexRow).
-		AddItem(qso, 3, 0, true).
-		AddItem(common, 0, 1, true)
+		AddItem(qso, 3, 1, true).
+		AddItem(
+			tview.NewFlex().SetDirection(tview.FlexColumn).
+				AddItem(common, 30, 1, true).
+				AddItem(clock, 0, 1, false),
+			0, 1, true)
 
 	contact := &ContactForm{
 		Form:   form,
 		Qso:    qso,
+		Clock:  clock,
 		Common: common,
 	}
 
